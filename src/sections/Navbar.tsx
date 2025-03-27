@@ -1,10 +1,14 @@
+'use client'
+
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect } from 'react'
 import pokeballIcon from '@/assets/pokeball-icon.png'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 function Navbar() {
+  const pathname = usePathname()
   interface NavRoutes {
     name: string
     route: string
@@ -16,6 +20,19 @@ function Navbar() {
     { name: 'My List', route: '/list' },
     { name: 'About', route: '/about' },
   ]
+
+  useEffect(() => {
+    console.log('navigation routse: ', navigationRoutes)
+    const index = navigationRoutes.findIndex(({ route }) => pathname === route)
+    ul(index)
+  }, [pathname, navigationRoutes])
+  function ul(index: number) {
+    console.log('index: ', index)
+    const underlines = document.querySelectorAll<HTMLElement>('.underline')
+    for (let i = 0; i < underlines.length; i++) {
+      underlines[i].style.transform = 'translate3d(' + index * 100 + '%,0,0)'
+    }
+  }
   return (
     <nav>
       <div className='block'>
@@ -25,16 +42,21 @@ function Navbar() {
         />
       </div>
       <div className='data'>
-        {navigationRoutes.map(({ name, route }, index) => {
-          return (
-            <Link
-              href={route}
-              key={`nav-route-${index}`}
-            >
-              {name}
-            </Link>
-          )
-        })}
+        <ul>
+          <div className='underline'></div>
+          <div className='underline'></div>
+          <div className='underline'></div>
+          {navigationRoutes.map(({ name, route }, index) => {
+            return (
+              <Link
+                href={route}
+                key={`nav-route-${index}`}
+              >
+                <li>{name}</li>
+              </Link>
+            )
+          })}
+        </ul>
       </div>
       <div className='block'>
         <GiHamburgerMenu />
