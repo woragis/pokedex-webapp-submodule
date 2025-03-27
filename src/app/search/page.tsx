@@ -1,6 +1,7 @@
 'use client'
 
 import { genInitialPokemonData, pokemonStore } from '@/store/pokemon'
+import Link from 'next/link'
 import { useEffect } from 'react'
 
 function Search() {
@@ -14,7 +15,14 @@ function Search() {
     <div>
       <ul>
         {pokemonStore.state.map(({ name, url }) => {
-          return <li key={`searched-pokemon-${name}`}>{name}</li>
+          return (
+            <Link
+              href={url}
+              key={`searched-pokemon-${name}`}
+            >
+              <li>{name}</li>
+            </Link>
+          )
         })}
       </ul>
     </div>

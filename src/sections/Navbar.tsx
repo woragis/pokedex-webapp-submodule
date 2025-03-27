@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import pokeballIcon from '@/assets/pokeball-icon.png'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import Link from 'next/link'
@@ -13,13 +13,16 @@ function Navbar() {
     name: string
     route: string
   }
-  const navigationRoutes: NavRoutes[] = [
-    { name: 'Search', route: '/search' },
-    { name: 'Compare', route: '/compare' },
-    { name: 'Pokemon', route: '/pokemon' },
-    { name: 'My List', route: '/list' },
-    { name: 'About', route: '/about' },
-  ]
+  const navigationRoutes: NavRoutes[] = useMemo<NavRoutes[]>(
+    () => [
+      { name: 'Search', route: '/search' },
+      { name: 'Compare', route: '/compare' },
+      { name: 'Pokemon', route: '/pokemon' },
+      { name: 'My List', route: '/list' },
+      { name: 'About', route: '/about' },
+    ],
+    []
+  )
 
   useEffect(() => {
     console.log('navigation routse: ', navigationRoutes)
