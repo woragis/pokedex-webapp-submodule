@@ -79,7 +79,7 @@ export const setRandomPokemonsData = async (pokemons: Pokemon[]) => {
   try {
     const pokemonsData: PokemonData[] = []
     for await (const pokemon of pokemons) {
-      const data = await axios.get<any>(pokemon.url)
+      const data = await axios.get<PokemonData>(pokemon.url)
       pokemonsData.push(data.data)
     }
     pokemonStore.setState((state) => ({

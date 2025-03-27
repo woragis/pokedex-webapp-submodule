@@ -7,7 +7,6 @@ import {
   setRandomPokemonsData as setSearchedPokemonsData,
   pokemonStore,
 } from '@/store/pokemon'
-import Link from 'next/link'
 import { useEffect } from 'react'
 
 function Search() {
@@ -26,7 +25,7 @@ function Search() {
         .slice(0, 20)
       setSearchedPokemonsData(randomPokemons)
     }
-  }, [pokemons, pokemonStore.state])
+  }, [pokemons])
 
   const searchPokemons = pokemonStore.state.searchedPokemons
 
@@ -34,7 +33,7 @@ function Search() {
     if (searchPokemons) {
       setLoading(false)
     }
-  }, [])
+  }, [searchPokemons])
 
   return (
     <div className='search'>
