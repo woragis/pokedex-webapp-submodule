@@ -65,3 +65,38 @@ interface PokemonData {
   sprites: Sprites
   types: Type[]
 }
+
+export const getPokemonsData = async (pokemons: Pokemon[]) => {
+  try {
+    const pokemonsData: PokemonData[] = []
+    for await (const pokemon of pokemons) {
+      const data = await axios.get<any>(pokemon.url)
+      pokemonsData.push(data.data)
+    }
+    console.log(pokemonsData)
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export const getPokemonDefaultSprite = (pokemonData: PokemonData) => {
+  try {
+    const pokemonSpriteUrl = pokemonData.sprites.front_default
+    return pokemonSpriteUrl
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export const getPokemonShinySprite = (pokemonData: PokemonData) => {
+  try {
+    const pokemonSpriteUrl = pokemonData.sprites.front_shiny
+    return pokemonSpriteUrl
+  } catch (e) {
+    console.error(e)
+  }
+}
+
+export const getPokemonTypes = (pokemonData: PokemonData) => {
+  return pokemonData.types
+}
