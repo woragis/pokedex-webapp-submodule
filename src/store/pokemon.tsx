@@ -21,3 +21,47 @@ export const genInitialPokemonData = async () => {
     console.log(e)
   }
 }
+
+type Sprites = {
+  back_default: string
+  back_shiny: string
+  front_default: string
+  front_shiny: string
+}
+
+type TypeName =
+  | 'normal' // 1
+  | 'fire' // 2
+  | 'water' // 3
+  | 'grass' // 4
+  | 'steel' // 5
+  | 'psychic' // 6
+  | 'ghost' // 7
+  | 'fairy' // 8
+  | 'ground' // 9
+  | 'rock' // 10
+  | 'electric' // 11
+  | 'fighting' // 12
+  | 'flying' // 13
+  | 'dark' // 14
+  | 'dragon' // 15
+  | 'ice' // 16
+  | 'poison' // 17
+  | 'bug' // 18
+  | 'steelar' // 19
+  | 'unknown' // 20
+  | 'shadow' // 21
+
+interface Type {
+  type: {
+    name: TypeName
+    url: string
+  }
+}
+
+interface PokemonData {
+  name: string
+  id: number
+  sprites: Sprites
+  types: Type[]
+}
