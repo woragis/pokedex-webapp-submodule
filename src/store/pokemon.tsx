@@ -44,16 +44,22 @@ interface Type {
   }
 }
 
-interface PokemonData {
+export interface PokemonData {
   name: string
   id: number
   sprites: Sprites
   types: Type[]
 }
 
-type PokemonsInitialState = Pokemon[]
+type PokemonsInitialState = {
+  pokemons: Pokemon[] | undefined
+  searchedPokemons: PokemonData[] | undefined
+}
 
-const pokemonInitialState: PokemonsInitialState = []
+const pokemonInitialState: PokemonsInitialState = {
+  pokemons: undefined,
+  searchedPokemons: undefined,
+}
 
 export const pokemonStore = new Store(pokemonInitialState)
 
@@ -63,20 +69,23 @@ export const genInitialPokemonData = async () => {
       results: Pokemon[]
     }
     const { data } = await axios.get<PokemonsRequest>(pokemonsRoute)
-    pokemonStore.setState(() => data.results)
+    pokemonStore.setState((state) => ({ ...state, pokemnos: data }))
   } catch (e) {
     console.error(e)
   }
 }
 
-export const getPokemonsData = async (pokemons: Pokemon[]) => {
+export const setRandomPokemonsData = async (pokemons: Pokemon[]) => {
   try {
     const pokemonsData: PokemonData[] = []
     for await (const pokemon of pokemons) {
       const data = await axios.get<any>(pokemon.url)
       pokemonsData.push(data.data)
     }
-    console.log(pokemonsData)
+    pokemonStore.setState((state) => ({
+      ...state,
+      searchedPokemons: pokemonsData,
+    }))
   } catch (e) {
     console.error(e)
   }
