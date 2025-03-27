@@ -1,7 +1,7 @@
 import React from 'react'
 
-function Wrapper() {
-  return <div className='content'>Wrapper</div>
+function Wrapper({ children }: { children: React.ReactNode }) {
+  return <div className='content'>{children}</div>
 }
 
 export default Wrapper

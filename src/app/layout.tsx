@@ -10,7 +10,9 @@ export const metadata: Metadata = {
   description: 'Pokedex full-stack app',
 }
 
-export default function RootLayout({}: Readonly<{
+export default function RootLayout({
+  children,
+}: Readonly<{
   children: React.ReactNode
 }>) {
   return (
@@ -20,7 +22,7 @@ export default function RootLayout({}: Readonly<{
           <Background />
           <div className='app'>
             <Navbar />
-            <Wrapper />
+            <Wrapper>{children}</Wrapper>
             <Footer />
           </div>
         </main>
