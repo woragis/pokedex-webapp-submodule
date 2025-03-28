@@ -1,6 +1,7 @@
 'use client'
 
 import { PokemonData } from '@/store/pokemon'
+import { typesStore } from '@/store/types'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -29,7 +30,26 @@ function PokemonCardGrid({ pokemons }: PokemonCardGridProps) {
                     alt={`${pokemon.name} sprite`}
                     className='pokemon-card-image'
                   />
-                  <div className='pokemon-card-types'></div>
+                  <div className='pokemon-card-types'>
+                    {pokemon.types.map((type, index) => {
+                      const curType = type.type.name
+                      const typeSrc =
+                        typesStore.state.typesData.find(
+                          (typeData) => typeData.name === curType
+                        )?.sprites['generation-viii']['sword-shield']
+                          .name_icon || ''
+                      return (
+                        <div key={`${pokemon.name} type ${index}`}>
+                          <Image
+                            width={150}
+                            height={30}
+                            src={typeSrc}
+                            alt={`type ${curType}`}
+                          />
+                        </div>
+                      )
+                    })}
+                  </div>
                 </Link>
               </div>
             )

@@ -1,4 +1,4 @@
-import { pokemonsRoute } from '@/constants/pokeapi'
+import { typesRoute } from '@/constants/pokeapi'
 import { Store } from '@tanstack/react-store'
 import axios from 'axios'
 
@@ -39,7 +39,7 @@ export const typesStore = new Store(pokemonInitialState)
 
 export const fetchTypesList = async () => {
   try {
-    const { data } = await axios.get<TypesRequest>(pokemonsRoute)
+    const { data } = await axios.get<TypesRequest>(typesRoute)
     typesStore.setState((state) => ({ ...state, typesList: data.results }))
     return data.results
   } catch (e) {
