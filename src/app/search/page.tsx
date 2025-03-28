@@ -13,15 +13,10 @@ function Search() {
     const pokemonList = await genInitialPokemonData()
     if (pokemonList) await fetchPokemonsData(pokemonList.slice(0, 20))
   }
-  const { pokemons, pokemonsList, searchedPokemons } = pokemonStore.state
+  const { pokemons } = pokemonStore.state
   useEffect(() => {
     q()
   }, [])
-  useEffect(() => {
-    console.log('pokemons:', pokemons)
-    console.log('searched pokemons:', searchedPokemons)
-    console.log('pokemons list:', pokemonsList)
-  }, [pokemons])
 
   return (
     <div className='search'>

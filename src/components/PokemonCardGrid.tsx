@@ -1,7 +1,6 @@
 'use client'
 
 import { PokemonData } from '@/store/pokemon'
-import Image from 'next/image'
 import Link from 'next/link'
 
 interface PokemonCardGridProps {
