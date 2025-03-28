@@ -13,7 +13,7 @@ function Navbar() {
     name: string
     route: string
   }
-  const navigationRoutes: NavRoutes[] = useMemo<NavRoutes[]>(
+  const navRoutes: NavRoutes[] = useMemo<NavRoutes[]>(
     () => [
       { name: 'Search', route: '/search' },
       { name: 'Compare', route: '/compare' },
@@ -25,9 +25,9 @@ function Navbar() {
   )
 
   useEffect(() => {
-    const index = navigationRoutes.findIndex(({ route }) => pathname === route)
-    ul(index)
-  }, [pathname, navigationRoutes])
+    const i = navRoutes.findIndex(({ route }) => pathname.includes(route))
+    ul(i)
+  }, [pathname, navRoutes])
   function ul(index: number) {
     const underlines = document.querySelectorAll<HTMLElement>('.underline')
     for (let i = 0; i < underlines.length; i++) {
@@ -47,7 +47,7 @@ function Navbar() {
           <div className='underline'></div>
           <div className='underline'></div>
           <div className='underline'></div>
-          {navigationRoutes.map(({ name, route }, index) => {
+          {navRoutes.map(({ name, route }, index) => {
             return (
               <Link
                 href={route}
