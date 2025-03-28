@@ -8,8 +8,8 @@ interface Pokemon {
 }
 
 type Sprites = {
-  back_default: string
-  back_shiny: string
+  // back_default: string
+  // back_shiny: string
   front_default: string
   front_shiny: string
 }
@@ -52,13 +52,15 @@ export interface PokemonData {
 }
 
 type PokemonsInitialState = {
-  pokemons: Pokemon[] | undefined
-  searchedPokemons: PokemonData[] | undefined
+  pokemonsList: Pokemon[]
+  pokemons: PokemonData[]
+  searchedPokemons: PokemonData[]
 }
 
 const pokemonInitialState: PokemonsInitialState = {
-  pokemons: undefined,
-  searchedPokemons: undefined,
+  pokemonsList: [],
+  pokemons: [],
+  searchedPokemons: [],
 }
 
 export const pokemonStore = new Store(pokemonInitialState)
@@ -69,25 +71,38 @@ export const genInitialPokemonData = async () => {
       results: Pokemon[]
     }
     const { data } = await axios.get<PokemonsRequest>(pokemonsRoute)
-    pokemonStore.setState((state) => ({ ...state, pokemnos: data }))
+    pokemonStore.setState((state) => ({ ...state, pokemonsList: data.results }))
+    return data.results
   } catch (e) {
     console.error(e)
   }
 }
 
-export const setRandomPokemonsData = async (pokemons: Pokemon[]) => {
+export const fetchPokemonsData = async (pokemons: Pokemon[]) => {
   try {
     const pokemonsData: PokemonData[] = []
     for await (const pokemon of pokemons) {
       const data = await axios.get<PokemonData>(pokemon.url)
       pokemonsData.push(data.data)
     }
-    pokemonStore.setState((state) => ({
-      ...state,
-      searchedPokemons: pokemonsData,
-    }))
+
+    pokemonStore.setState((state) => ({ ...state, pokemons: pokemonsData }))
   } catch (e) {
     console.error(e)
+  }
+}
+
+export const setSearchedPokemonsDataToRandom = async () => {
+  const pokemonsData = pokemonStore.state.pokemons
+  if (pokemonsData) {
+    const randomPokemons = pokemonsData
+      .sort(() => Math.random() - Math.random())
+      .slice(0, 20)
+
+    pokemonStore.setState((state) => ({
+      ...state,
+      searchedPokemons: randomPokemons,
+    }))
   }
 }
 
