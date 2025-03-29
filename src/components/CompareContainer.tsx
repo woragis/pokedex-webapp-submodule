@@ -54,6 +54,7 @@ function CompareContainer({ pokemon, empty }: CompareContainerProps) {
                           src={monTypeSrc}
                           width={130}
                           height={30}
+                          className='pokemon-type-image'
                         />
                       </li>
                     )
@@ -61,7 +62,7 @@ function CompareContainer({ pokemon, empty }: CompareContainerProps) {
                 </ul>
               </div>
             </div>
-            <div>
+            {/* <div>
               {pokemon.stats.map((stat) => {
                 return (
                   <div key={`pokemon-${pokemon.name}-stat-${stat.stat.name}`}>
@@ -71,15 +72,20 @@ function CompareContainer({ pokemon, empty }: CompareContainerProps) {
                   </div>
                 )
               })}
-            </div>
+            </div> */}
           </div>
-          <div className='audio'>
+          {/* <div className='audio'>
             <audio
               src={pokemon.cries.latest}
               controls
             >
               Your browser doesnt support the audio element
             </audio>
+          </div> */}
+          <div className='compare-action-buttons'>
+            <button className='compare-btn'>add</button>
+            <button className='compare-btn'>view</button>
+            <button className='compare-btn'>remove</button>
           </div>
         </div>
       )}
