@@ -50,7 +50,7 @@
       }
       &-image {
         height: 10rem;
-        cursor: pointer;
+        cursor: url('../../assets/pokedex-icon.png'), pointer;
       }
       &-title {
         margin-top: 1rem;
