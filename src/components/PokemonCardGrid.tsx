@@ -1,6 +1,6 @@
 'use client'
 
-import { PokemonData } from '@/store/pokemon'
+import { PokemonData } from '@/store/types/pokemon'
 import { typesStore } from '@/store/types'
 import Image from 'next/image'
 import Link from 'next/link'
