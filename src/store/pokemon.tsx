@@ -33,8 +33,20 @@ export const pokemonStoreDispatch = {
       let compare = state.pokemons.compare
       if (compare.length >= 2) {
         compare.pop()
-        compare.push(pokemon)
+        compare.unshift(pokemon)
       } else compare.push(pokemon)
+      console.log('state after insert', state)
+      return state
+    })
+  },
+  removeFromCompare: (pokemon: PokemonData) => {
+    pokemonStore.setState((state) => {
+      let compare = state.pokemons.compare
+      if (compare.length === 0) return state
+      else {
+        compare = compare.filter((pokemons) => pokemons.id !== pokemon.id)
+      }
+      console.log('state after remove', state)
       return state
     })
   },
