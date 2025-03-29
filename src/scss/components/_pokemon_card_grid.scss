@@ -27,6 +27,28 @@
         text-align: center;
         cursor: pointer;
       }
+      &-types {
+        width: 100%;
+        display: flex;
+        margin-top: 1rem;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        flex-direction: column;
+        height: 80px;
+        &-type {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          margin-top: 0.5rem;
+          gap: 0.4rem;
+          &-image {
+            height: 2rem;
+            border-radius: 2rem;
+          }
+        }
+      }
     }
   }
 }
