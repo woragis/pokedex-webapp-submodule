@@ -17,11 +17,13 @@ function SearchPokedex() {
 
   const [search, setSearch] = useState<string>('')
 
-  const filteredPokemons = pokemonList
-    ?.filter((pokemon) =>
-      pokemon.name.toLowerCase().includes(search.toLowerCase())
-    )
-    .slice(0, 20)
+  const shuffleArray = (array: any[]) => array.sort(() => Math.random() - 0.5)
+
+  const filteredPokemons = search
+    ? pokemonList?.filter((pokemon) =>
+        pokemon.name.toLowerCase().includes(search.toLowerCase())
+      )
+    : shuffleArray(pokemonList ?? []).slice(0, 20)
 
   if (isPokemonListLoading || isTypeListLoading) return <h1>loading</h1>
   return (
