@@ -38,11 +38,60 @@ export interface PokemonType {
   }
 }
 
+type Ability = {
+  ability: {
+    name: string
+    url: string
+  }
+  is_hidden: boolean
+  slot: 1 | 2 | 3
+}
+type Stat = {
+  base_stat: number
+  effort: number
+  stat: {
+    name: string
+    url: string
+  }
+}
+type Move = {
+  move: {
+    name: string
+    url: string
+  }
+  version_group_details: {
+    level_learned_at: number
+    move_learn_method: {
+      name: string
+      url: string
+    }
+    version_group: {
+      name: string
+      url: string
+    }
+  }[]
+}
+type Form = {
+  name: string
+  url: string
+}
+type Cry = {
+  latest: string
+}
 export interface PokemonData {
   name: string
   id: number
   sprites: Sprites
   types: PokemonType[]
+
+  weight: number
+  height: number
+  base_experience: number
+  abilities: Ability[]
+  stats: Stat[]
+  moves: Move[]
+  forms: Form[]
+  cries: Cry
 }
 
 export type PokemonsInitialState = {
