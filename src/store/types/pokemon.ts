@@ -31,7 +31,7 @@ export type TypeName =
   | 'unknown' // 20
   | 'shadow' // 21
 
-export interface Type {
+export interface PokemonType {
   type: {
     name: TypeName
     url: string
@@ -42,7 +42,7 @@ export interface PokemonData {
   name: string
   id: number
   sprites: Sprites
-  types: Type[]
+  types: PokemonType[]
 }
 
 export type PokemonsInitialState = {
@@ -53,4 +53,32 @@ export type PokemonsInitialState = {
 
 export interface PokemonsRequest {
   results: Pokemon[]
+}
+
+export interface Type {
+  name: string
+  url: string
+}
+
+export type TypesSprites = {
+  'generation-viii': {
+    'sword-shield': {
+      name_icon: string
+    }
+  }
+}
+
+export interface TypeData {
+  name: string
+  id: number
+  sprites: TypesSprites
+}
+
+export type TypesInitialState = {
+  typesList: Type[]
+  typesData: TypeData[]
+}
+
+export interface TypesRequest {
+  results: Type[]
 }
