@@ -124,10 +124,23 @@ export type TypesSprites = {
   }
 }
 
+type apiObject = {
+  name: string
+  url: string
+}
+type DamageRelations = {
+  double_damage_from: apiObject[]
+  double_damage_to: apiObject[]
+  half_damage_from: apiObject[]
+  half_damage_to: apiObject[]
+  no_damage_from: apiObject[]
+  no_damage_to: apiObject[]
+}
 export interface TypeData {
   name: string
   id: number
   sprites: TypesSprites
+  damage_relations: DamageRelations
 }
 
 export interface TypesRequest {
