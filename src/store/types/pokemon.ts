@@ -50,6 +50,7 @@ export type PokemonsInitialState = {
     list: Pokemon[]
     data: PokemonData[]
     search: PokemonData[]
+    compare: PokemonData[]
   }
   types: {
     list: Type[]

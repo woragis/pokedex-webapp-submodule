@@ -1,6 +1,10 @@
 'use client'
 
-import { pokemonStore, usePokemonData } from '@/store/pokemon'
+import {
+  pokemonStore,
+  pokemonStoreDispatch,
+  usePokemonData,
+} from '@/store/pokemon'
 import { Pokemon } from '@/store/types/pokemon'
 import Image from 'next/image'
 import { redirect, usePathname } from 'next/navigation'
@@ -15,6 +19,7 @@ function PokemonCardGrid({ list }: PokemonCardGridProps) {
   const { data: pokemons } = usePokemonData(list)
   const location = usePathname()
 
+  const { addToCompare } = pokemonStoreDispatch
   return (
     <div className='pokemon-card-grid-container'>
       <div className='pokemon-card-grid'>
@@ -33,7 +38,10 @@ function PokemonCardGrid({ list }: PokemonCardGridProps) {
                     <FaTrash className='trash' />
                   )}
                 </div>
-                <div className='pokemon-card-compare'>
+                <div
+                  className='pokemon-card-compare'
+                  onClick={() => addToCompare(pokemon)}
+                >
                   <IoGitCompare />
                 </div>
                 {/* <Link href={`/pokemon/${pokemon.id}`}> */}

@@ -17,6 +17,7 @@ const pokemonInitialState: PokemonsInitialState = {
     data: [],
     list: [],
     search: [],
+    compare: [],
   },
   types: {
     data: [],
@@ -27,6 +28,16 @@ const pokemonInitialState: PokemonsInitialState = {
 export const pokemonStore = new Store(pokemonInitialState)
 
 export const pokemonStoreDispatch = {
+  addToCompare: (pokemon: PokemonData) => {
+    pokemonStore.setState((state) => {
+      let compare = state.pokemons.compare
+      if (compare.length >= 2) {
+        compare.pop()
+        compare.push(pokemon)
+      } else compare.push(pokemon)
+      return state
+    })
+  },
   fetchPokemonsList: async () => {
     try {
       const { data } = await axios.get<PokemonsRequest>(pokemonsRoute)
