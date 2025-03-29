@@ -1,11 +1,7 @@
 import SearchPokedex from '@/components/SearchPokedex'
 
 function Search() {
-  return (
-    <div className='search'>
-      <SearchPokedex />
-    </div>
-  )
+  return <SearchPokedex />
 }
 
 export default Search

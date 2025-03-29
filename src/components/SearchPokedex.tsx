@@ -27,11 +27,13 @@ function SearchPokedex() {
 
   if (isPokemonListLoading || isTypeListLoading) return <h1>loading</h1>
   return (
-    <div>
+    <div className='search'>
       <input
         type='text'
         name='search'
         id='search'
+        className='pokemon-searchbar'
+        placeholder='Search Pokemon'
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
