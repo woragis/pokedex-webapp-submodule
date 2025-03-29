@@ -18,8 +18,39 @@
       padding: 1rem;
       box-shadow: rgba(0, 0, 0, 0.35) 0 5px 15px;
       position: relative;
+      svg {
+        transition: 300ms ease-in-out;
+        font-size: 1.3rem;
+        &:hover {
+          font-size: 2rem;
+        }
+      }
+      &-list {
+        position: absolute;
+        top: 0.7rem;
+        left: 0.8rem;
+        font-size: 1rem;
+        cursor: pointer;
+        .trash {
+          color: #e21b5a;
+        }
+        .plus {
+          color: #27af0f;
+        }
+      }
+      &-compare {
+        position: absolute;
+        top: 0.7rem;
+        right: 0.8rem;
+        font-size: 1rem;
+        cursor: pointer;
+        svg {
+          color: #1f51ff;
+        }
+      }
       &-image {
         height: 10rem;
+        cursor: pointer;
       }
       &-title {
         margin-top: 1rem;
