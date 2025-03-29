@@ -1,15 +1,17 @@
 'use client'
 
-import { pokemonStore } from '@/store/pokemon'
-import { PokemonData } from '@/store/types/pokemon'
+import { pokemonStore, usePokemonData } from '@/store/pokemon'
+import { Pokemon } from '@/store/types/pokemon'
 import Image from 'next/image'
 import Link from 'next/link'
 
 interface PokemonCardGridProps {
-  pokemons: PokemonData[]
+  list: Pokemon[]
 }
 
-function PokemonCardGrid({ pokemons }: PokemonCardGridProps) {
+function PokemonCardGrid({ list }: PokemonCardGridProps) {
+  const { data: pokemons } = usePokemonData(list)
+
   return (
     <div className='pokemon-card-grid-container'>
       <div className='pokemon-card-grid'>
