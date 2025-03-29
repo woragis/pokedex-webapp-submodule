@@ -7,8 +7,12 @@ function ComparePage() {
     <div>
       <p>compared pokemons</p>
       <ul>
-        {pokemonStore.state.pokemons.compare.map((comparedMons) => {
-          return <li>{comparedMons.name}</li>
+        {pokemonStore.state.pokemons.compare.map((comparedMons, index) => {
+          return (
+            <li key={`compared-mon-${comparedMons.id}-${index}`}>
+              {comparedMons.name}
+            </li>
+          )
         })}
       </ul>
     </div>

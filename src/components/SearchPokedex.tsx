@@ -8,6 +8,7 @@ import {
 } from '@/store/pokemon'
 import PokemonCardGrid from './PokemonCardGrid'
 import { debounce } from '@/utils/debounce'
+import { Pokemon } from '@/store/types/pokemon'
 
 function SearchPokedex() {
   const { data: pokemonList, isLoading: isPokemonListLoading } =
@@ -32,7 +33,7 @@ function SearchPokedex() {
   }
 
   // Function to shuffle an array randomly
-  const shuffleArray = (array: any[]) => {
+  const shuffleArray = (array: Pokemon[]) => {
     return array.sort(() => Math.random() - 0.5)
   }
 

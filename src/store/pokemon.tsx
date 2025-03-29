@@ -30,7 +30,7 @@ export const pokemonStore = new Store(pokemonInitialState)
 export const pokemonStoreDispatch = {
   addToCompare: (pokemon: PokemonData) => {
     pokemonStore.setState((state) => {
-      let compare = state.pokemons.compare
+      const compare = state.pokemons.compare
       if (compare.length >= 2) {
         compare.pop()
         compare.unshift(pokemon)
