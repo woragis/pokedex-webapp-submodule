@@ -7,6 +7,7 @@ import {
   PokemonsInitialState,
   PokemonsRequest,
 } from './types/pokemon'
+import { useQuery } from '@tanstack/react-query'
 
 const pokemonInitialState: PokemonsInitialState = {
   pokemonsList: [],
@@ -61,4 +62,40 @@ export const pokemonStoreDispatch = {
   getShinySprite: (pokemonData: PokemonData) => {
     return pokemonData.sprites.front_shiny
   },
+}
+
+// ✅ Use React Query to fetch the initial list of Pokémon
+export const useInitialPokemonData = () => {
+  return useQuery({
+    queryKey: ['pokemonsList'],
+    queryFn: async () => {
+      const { data } = await axios.get<{ results: Pokemon[] }>(pokemonsRoute)
+      pokemonStore.setState((state) => ({
+        ...state,
+        pokemonsList: data.results,
+      }))
+      return data.results
+    },
+    staleTime: 1000 * 60 * 5, // Cache for 5 minutes
+  })
+}
+
+// ✅ Use React Query to fetch detailed Pokémon data
+export const usePokemonData = (pokemons: Pokemon[] | undefined) => {
+  return useQuery({
+    queryKey: ['pokemonsData', pokemons?.length],
+    queryFn: async () => {
+      if (!pokemons) return []
+      const pokemonsData: PokemonData[] = await Promise.all(
+        pokemons.map(async (pokemon) => {
+          const { data } = await axios.get<PokemonData>(pokemon.url)
+          return data
+        })
+      )
+      pokemonStore.setState((state) => ({ ...state, pokemons: pokemonsData }))
+      return pokemonsData
+    },
+    enabled: !!pokemons, // Only run when `pokemons` is available
+    staleTime: 1000 * 60 * 5,
+  })
 }

@@ -1,22 +1,13 @@
 'use client'
 
 import PokemonCardGrid from '@/components/PokemonCardGrid'
-import { pokemonStore, pokemonStoreDispatch } from '@/store/pokemon'
-import { fetchTypesData, fetchTypesList } from '@/store/types'
-import { useEffect } from 'react'
+import { useInitialPokemonData, usePokemonData } from '@/store/pokemon'
 
 function Search() {
-  const { fetchPokemonsList, fetchPokemonsData } = pokemonStoreDispatch
-  const q = async () => {
-    const pokemonList = await fetchPokemonsList()
-    const typesList = await fetchTypesList()
-    if (typesList) await fetchTypesData(typesList)
-    if (pokemonList) await fetchPokemonsData(pokemonList.slice(0, 10))
-  }
-  const { pokemons } = pokemonStore.state
-  useEffect(() => {
-    q()
-  }, [])
+  const { data: pokemonsList } = useInitialPokemonData()
+  const { data: pokemonsData } = usePokemonData(
+    pokemonsList?.sort(() => Math.random() - Math.random()).slice(0, 20)
+  )
 
   return (
     <div className='search'>
@@ -25,7 +16,7 @@ function Search() {
         name='search'
         id='search'
       />
-      <PokemonCardGrid pokemons={pokemons} />
+      <PokemonCardGrid pokemons={pokemonsData!} />
     </div>
   )
 }

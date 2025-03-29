@@ -4,6 +4,7 @@ import Wrapper from '@/sections/Wrapper'
 import Footer from '@/sections/Footer'
 import Background from '@/components/Background'
 import '@/scss/index.scss'
+import ReactQueryProvider from '@/features/QueryClient'
 
 export const metadata: Metadata = {
   title: 'Pokedex',
@@ -18,14 +19,16 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className='vsc-initialized'>
-        <main className='main-container'>
-          <Background />
-          <div className='app'>
-            <Navbar />
-            <Wrapper>{children}</Wrapper>
-            <Footer />
-          </div>
-        </main>
+        <ReactQueryProvider>
+          <main className='main-container'>
+            <Background />
+            <div className='app'>
+              <Navbar />
+              <Wrapper>{children}</Wrapper>
+              <Footer />
+            </div>
+          </main>
+        </ReactQueryProvider>
       </body>
     </html>
   )
