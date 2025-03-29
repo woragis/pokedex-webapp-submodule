@@ -46,9 +46,15 @@ export interface PokemonData {
 }
 
 export type PokemonsInitialState = {
-  pokemonsList: Pokemon[]
-  pokemons: PokemonData[]
-  searchedPokemons: PokemonData[]
+  pokemons: {
+    list: Pokemon[]
+    data: PokemonData[]
+    search: PokemonData[]
+  }
+  types: {
+    list: Type[]
+    data: TypeData[]
+  }
 }
 
 export interface PokemonsRequest {
@@ -72,11 +78,6 @@ export interface TypeData {
   name: string
   id: number
   sprites: TypesSprites
-}
-
-export type TypesInitialState = {
-  typesList: Type[]
-  typesData: TypeData[]
 }
 
 export interface TypesRequest {

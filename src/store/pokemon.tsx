@@ -1,4 +1,4 @@
-import { pokemonsRoute } from '@/constants/pokeapi'
+import { pokemonsRoute, typesRoute } from '@/constants/pokeapi'
 import { Store } from '@tanstack/react-store'
 import axios from 'axios'
 import {
@@ -6,13 +6,22 @@ import {
   PokemonData,
   PokemonsInitialState,
   PokemonsRequest,
+  Type,
+  TypeData,
+  TypesRequest,
 } from './types/pokemon'
 import { useQuery } from '@tanstack/react-query'
 
 const pokemonInitialState: PokemonsInitialState = {
-  pokemonsList: [],
-  pokemons: [],
-  searchedPokemons: [],
+  pokemons: {
+    data: [],
+    list: [],
+    search: [],
+  },
+  types: {
+    data: [],
+    list: [],
+  },
 }
 
 export const pokemonStore = new Store(pokemonInitialState)
@@ -23,7 +32,7 @@ export const pokemonStoreDispatch = {
       const { data } = await axios.get<PokemonsRequest>(pokemonsRoute)
       pokemonStore.setState((state) => ({
         ...state,
-        pokemonsList: data.results,
+        pokemons: { ...state.pokemons, list: data.results },
       }))
       return data.results
     } catch (e) {
@@ -38,13 +47,16 @@ export const pokemonStoreDispatch = {
         pokemonsData.push(data.data)
       }
 
-      pokemonStore.setState((state) => ({ ...state, pokemons: pokemonsData }))
+      pokemonStore.setState((state) => ({
+        ...state,
+        pokemons: { ...state.pokemons, data: pokemonsData },
+      }))
     } catch (e) {
       console.error(e)
     }
   },
   setSearchedPokemonsDataToRandom: async () => {
-    const pokemonsData = pokemonStore.state.pokemons
+    const pokemonsData = pokemonStore.state.pokemons.data
     if (pokemonsData) {
       const randomPokemons = pokemonsData
         .sort(() => Math.random() - Math.random())
@@ -52,11 +64,11 @@ export const pokemonStoreDispatch = {
 
       pokemonStore.setState((state) => ({
         ...state,
-        searchedPokemons: randomPokemons,
+        pokemons: { ...state.pokemons, search: randomPokemons },
       }))
     }
   },
-  getDefaultSprite: (pokemonData: PokemonData) => {
+  getSprite: (pokemonData: PokemonData) => {
     return pokemonData.sprites.front_default
   },
   getShinySprite: (pokemonData: PokemonData) => {
@@ -72,7 +84,7 @@ export const useInitialPokemonData = () => {
       const { data } = await axios.get<{ results: Pokemon[] }>(pokemonsRoute)
       pokemonStore.setState((state) => ({
         ...state,
-        pokemonsList: data.results,
+        pokemons: { ...state.pokemons, list: data.results },
       }))
       return data.results
     },
@@ -92,10 +104,52 @@ export const usePokemonData = (pokemons: Pokemon[] | undefined) => {
           return data
         })
       )
-      pokemonStore.setState((state) => ({ ...state, pokemons: pokemonsData }))
+      pokemonStore.setState((state) => ({
+        ...state,
+        pokemons: { ...state.pokemons, data: pokemonsData },
+      }))
       return pokemonsData
     },
     enabled: !!pokemons, // Only run when `pokemons` is available
+    staleTime: 1000 * 60 * 5,
+  })
+}
+
+// ✅ Use React Query to fetch the list of Pokémon types
+export const useTypesList = () => {
+  return useQuery({
+    queryKey: ['typesList'],
+    queryFn: async () => {
+      const { data } = await axios.get<TypesRequest>(typesRoute)
+      pokemonStore.setState((state) => ({
+        ...state,
+        types: { ...state.types, list: data.results },
+      }))
+      return data.results
+    },
+    staleTime: 1000 * 60 * 5, // Cache for 5 minutes
+  })
+}
+
+// ✅ Use React Query to fetch detailed type data
+export const useTypesData = (types: Type[] | undefined) => {
+  return useQuery({
+    queryKey: ['typesData', types?.length],
+    queryFn: async () => {
+      if (!types) return []
+      const typesData: TypeData[] = await Promise.all(
+        types.map(async (type) => {
+          const { data } = await axios.get<TypeData>(type.url)
+          return data
+        })
+      )
+      pokemonStore.setState((state) => ({
+        ...state,
+        types: { ...state.types, data: typesData },
+      }))
+      return typesData
+    },
+    enabled: !!types, // Only run when `types` is available
     staleTime: 1000 * 60 * 5,
   })
 }
