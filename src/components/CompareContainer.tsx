@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { FaPlus } from 'react-icons/fa6'
 
 import { pokemonStore } from '@/store/pokemon'
-import { PokemonData, PokemonType, TypeData } from '@/store/types/pokemon'
+import { PokemonData } from '@/store/types/pokemon'
 
 interface CompareContainerProps {
   pokemon: PokemonData
@@ -11,91 +11,92 @@ interface CompareContainerProps {
 }
 
 function CompareContainer({ pokemon, empty }: CompareContainerProps) {
-  const createStatsArray = (types: PokemonType[], statType: string) => {
-    const statsArray: { name: string; image: string }[] = []
-    const statsSet = new Set<string>()
-    types.forEach((type: any) => {
-      const key = Object.keys(type)[0]
-      type[key][statType].forEach((stat: string) => {
-        if (!statsSet.has(stat)) {
-          // @ts-ignore
-          statsArray.push({ name: stat, image: pokemonTypes[stat].image })
-          statsSet.add(stat)
-        }
-      })
-    })
-    return statsArray
-  }
-  const getStats = () => {
-    return (
-      <>
-        <div className='pokemon-types'>
-          <h4 className='pokemon-type-title'>Strength</h4>
-          <div className='pokemon-type-icons'>
-            {createStatsArray(pokemon.types, 'strength').map(
-              (stat: { image: string }) => (
-                <div className='pokemon-type'>
-                  <img
-                    src={stat.image}
-                    alt=''
-                    className='pokemon-type-image'
-                  />
-                </div>
-              )
-            )}
-          </div>
-        </div>
-        <div className='pokemon-types'>
-          <h4 className='pokemon-type-title'>Weakness</h4>
-          <div className='pokemon-type-icons'>
-            {createStatsArray(pokemon.types, 'weakness').map(
-              (stat: { image: string }) => (
-                <div className='pokemon-type'>
-                  <img
-                    src={stat.image}
-                    alt=''
-                    className='pokemon-type-image'
-                  />
-                </div>
-              )
-            )}
-          </div>
-        </div>
-        <div className='pokemon-types'>
-          <h4 className='pokemon-type-title'>Resistance</h4>
-          <div className='pokemon-type-icons'>
-            {createStatsArray(pokemon.types, 'resistance').map(
-              (stat: { image: string }) => (
-                <div className='pokemon-type'>
-                  <img
-                    src={stat.image}
-                    alt=''
-                    className='pokemon-type-image'
-                  />
-                </div>
-              )
-            )}
-          </div>
-        </div>
-        <div className='pokemon-types'>
-          <h4 className='pokemon-type-title'>Vulnerable</h4>
-          <div className='pokemon-type-icons'>
-            {createStatsArray(pokemon.types, 'vulnerable').map(
-              (stat: { image: string }) => (
-                <div className='pokemon-type'>
-                  <img
-                    src={stat.image}
-                    alt=''
-                    className='pokemon-type-image'
-                  />
-                </div>
-              )
-            )}
-          </div>
-        </div>
-      </>
-    )
-  }
+  // const createStatsArray = (types: PokemonType[], statType: string) => {
+  //   const statsArray: { name: string; image: string }[] = []
+  //   const statsSet = new Set<string>()
+  //   types.forEach((type: any) => {
+  //     const key = Object.keys(type)[0]
+  //     type[key][statType].forEach((stat: string) => {
+  //       if (!statsSet.has(stat)) {
+  //         // @ts-expect-error
+  //         statsArray.push({ name: stat, image: pokemonTypes[stat].image })
+  //         statsSet.add(stat)
+  //       }
+  //     })
+  //   })
+  //   return statsArray
+  // }
+  // // @ts-ignore-unused
+  // const getStats = () => {
+  //   return (
+  //     <>
+  //       <div className='pokemon-types'>
+  //         <h4 className='pokemon-type-title'>Strength</h4>
+  //         <div className='pokemon-type-icons'>
+  //           {createStatsArray(pokemon.types, 'strength').map(
+  //             (stat: { image: string }) => (
+  //               <div className='pokemon-type'>
+  //                 <img
+  //                   src={stat.image}
+  //                   alt=''
+  //                   className='pokemon-type-image'
+  //                 />
+  //               </div>
+  //             )
+  //           )}
+  //         </div>
+  //       </div>
+  //       <div className='pokemon-types'>
+  //         <h4 className='pokemon-type-title'>Weakness</h4>
+  //         <div className='pokemon-type-icons'>
+  //           {createStatsArray(pokemon.types, 'weakness').map(
+  //             (stat: { image: string }) => (
+  //               <div className='pokemon-type'>
+  //                 <img
+  //                   src={stat.image}
+  //                   alt=''
+  //                   className='pokemon-type-image'
+  //                 />
+  //               </div>
+  //             )
+  //           )}
+  //         </div>
+  //       </div>
+  //       <div className='pokemon-types'>
+  //         <h4 className='pokemon-type-title'>Resistance</h4>
+  //         <div className='pokemon-type-icons'>
+  //           {createStatsArray(pokemon.types, 'resistance').map(
+  //             (stat: { image: string }) => (
+  //               <div className='pokemon-type'>
+  //                 <img
+  //                   src={stat.image}
+  //                   alt=''
+  //                   className='pokemon-type-image'
+  //                 />
+  //               </div>
+  //             )
+  //           )}
+  //         </div>
+  //       </div>
+  //       <div className='pokemon-types'>
+  //         <h4 className='pokemon-type-title'>Vulnerable</h4>
+  //         <div className='pokemon-type-icons'>
+  //           {createStatsArray(pokemon.types, 'vulnerable').map(
+  //             (stat: { image: string }) => (
+  //               <div className='pokemon-type'>
+  //                 <img
+  //                   src={stat.image}
+  //                   alt=''
+  //                   className='pokemon-type-image'
+  //                 />
+  //               </div>
+  //             )
+  //           )}
+  //         </div>
+  //       </div>
+  //     </>
+  //   )
+  // }
   return (
     <div className='compare-container'>
       {empty && (
