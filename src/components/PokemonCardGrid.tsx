@@ -1,15 +1,12 @@
 'use client'
 
-import {
-  pokemonStore,
-  pokemonStoreDispatch,
-  usePokemonData,
-} from '@/store/pokemon'
+import { pokemonStoreDispatch, usePokemonData } from '@/store/pokemon'
 import { Pokemon } from '@/store/types/pokemon'
 import Image from 'next/image'
 import { redirect, usePathname } from 'next/navigation'
 import { FaPlus, FaTrash } from 'react-icons/fa6'
 import { IoGitCompare } from 'react-icons/io5'
+import PokemonTypes from './PokemonTypes'
 
 interface PokemonCardGridProps {
   list: Pokemon[]
@@ -57,29 +54,10 @@ function PokemonCardGrid({ list }: PokemonCardGridProps) {
                   }}
                 />
                 <div className='pokemon-card-types'>
-                  {pokemon.types.map((type, index) => {
-                    const curType = type.type.name
-                    const typeSrc =
-                      pokemonStore.state.types.data.find(
-                        (typeData) => typeData.name === curType
-                      )?.sprites['generation-viii']['sword-shield'].name_icon ||
-                      null
-                    if (typeSrc && typeSrc.length > 0)
-                      return (
-                        <div
-                          key={`${pokemon.name} type ${index}`}
-                          className='pokemon-card-types-type'
-                        >
-                          <Image
-                            width={130}
-                            height={30}
-                            src={typeSrc}
-                            alt={`type ${curType}`}
-                            className='pokemon-card-types-type-image'
-                          />
-                        </div>
-                      )
-                  })}
+                  <PokemonTypes
+                    name={pokemon.name}
+                    types={pokemon.types}
+                  />
                 </div>
                 {/* </Link> */}
               </div>
