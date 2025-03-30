@@ -32,25 +32,33 @@ export const pokemonStore = new Store(pokemonInitialState)
 export const pokemonStoreDispatch = {
   addToCompare: (pokemon: PokemonData) => {
     pokemonStore.setState((state) => {
-      const compare = state.pokemons.compare
-      if (compare.length >= 2) {
-        compare.pop()
-        compare.unshift(pokemon)
-      } else compare.push(pokemon)
-      console.log('state after insert', state)
-      return state
+      let newCompare = [...state.pokemons.compare]
+
+      if (newCompare.length >= 2) {
+        newCompare = [pokemon, newCompare[0]] // Keep the first, replace the second
+      } else {
+        newCompare.push(pokemon)
+      }
+
+      return {
+        ...state,
+        pokemons: {
+          ...state.pokemons,
+          compare: newCompare,
+        },
+      }
     })
   },
   removeFromCompare: (pokemon: PokemonData) => {
-    pokemonStore.setState((state) => {
-      let compare = state.pokemons.compare
-      if (compare.length === 0) return state
-      else {
-        compare = compare.filter((pokemons) => pokemons.id !== pokemon.id)
-      }
-      console.log('state after remove', state)
-      return state
-    })
+    pokemonStore.setState((state) => ({
+      ...state,
+      pokemons: {
+        ...state.pokemons,
+        compare: state.pokemons.compare.filter(
+          (mons) => mons.id !== pokemon.id
+        ),
+      },
+    }))
   },
   fetchPokemonsList: async () => {
     try {
