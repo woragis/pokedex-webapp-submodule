@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 import { FaPlus } from 'react-icons/fa6'
 
-import { pokemonStore, pokemonStoreDispatch } from '@/store/pokemon'
+import { pokemonStore } from '@/store/pokemon'
 import { PokemonData } from '@/store/types/pokemon'
 import TypeDamageRelations from './TypeDamageRelations'
 

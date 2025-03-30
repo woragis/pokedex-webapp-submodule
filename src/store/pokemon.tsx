@@ -93,9 +93,6 @@ export const pokemonStoreDispatch = {
       }))
     }
   },
-  mapPokemonTypes: (pokemon: PokemonData) => {
-    pokemon.types.map
-  },
   getTypeSprite: (type: string) => {
     return pokemonStore.state.types.data.find(
       (typeData) => typeData.name === type
