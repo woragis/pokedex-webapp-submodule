@@ -146,3 +146,10 @@ export interface TypeData {
 export interface TypesRequest {
   results: Type[]
 }
+
+export type TypeEffectiveness = {
+  weakTo: string[]
+  strongAgainst: string[]
+  resistantTo: string[]
+  immuneTo: string[]
+}

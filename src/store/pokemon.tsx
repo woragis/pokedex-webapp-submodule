@@ -9,6 +9,7 @@ import {
   PokemonType,
   Type,
   TypeData,
+  TypeEffectiveness,
   TypesRequest,
 } from './types/pokemon'
 import { useQuery } from '@tanstack/react-query'
@@ -95,40 +96,43 @@ export const pokemonStoreDispatch = {
   mapPokemonTypes: (pokemon: PokemonData) => {
     pokemon.types.map
   },
-  getTypeSprite: (type: PokemonType) => {
+  getTypeSprite: (type: string) => {
     return pokemonStore.state.types.data.find(
-      (typeData) => typeData.name === type.type.name
+      (typeData) => typeData.name === type
     )?.sprites['generation-viii']['sword-shield'].name_icon
   },
-  getTypeDoubleDamageFrom: (type: PokemonType) => {
-    return pokemonStore.state.types.data.find(
-      (typeData) => typeData.name === type.type.name
-    )?.damage_relations.double_damage_from
-  },
-  getTypeDoubleDamageTo: (type: PokemonType) => {
-    return pokemonStore.state.types.data.find(
-      (typeData) => typeData.name === type.type.name
-    )?.damage_relations.double_damage_to
-  },
-  getTypeHalfDamageFrom: (type: PokemonType) => {
-    return pokemonStore.state.types.data.find(
-      (typeData) => typeData.name === type.type.name
-    )?.damage_relations.half_damage_from
-  },
-  getTypeHalfDamageTo: (type: PokemonType) => {
-    return pokemonStore.state.types.data.find(
-      (typeData) => typeData.name === type.type.name
-    )?.damage_relations.half_damage_to
-  },
-  getTypeNoDamageFrom: (type: PokemonType) => {
-    return pokemonStore.state.types.data.find(
-      (typeData) => typeData.name === type.type.name
-    )?.damage_relations.no_damage_to
-  },
-  getTypeNoDamageTo: (type: PokemonType) => {
-    return pokemonStore.state.types.data.find(
-      (typeData) => typeData.name === type.type.name
-    )?.damage_relations.no_damage_to
+  getPokemonTypeEffectiveness: (types: PokemonType[]): TypeEffectiveness => {
+    const weaknesses = new Set<string>()
+    const resistances = new Set<string>()
+    const immunities = new Set<string>()
+    const strengths = new Set<string>()
+
+    types.forEach((type) => {
+      console.log('type: ', type)
+      const typeData = pokemonStore.state.types.data.find(
+        (typeData) => typeData.name === type.type.name
+      )?.damage_relations
+
+      if (!typeData) return
+
+      typeData.double_damage_from.forEach(({ name }) => weaknesses.add(name))
+      typeData.half_damage_from.forEach(({ name }) => resistances.add(name))
+      typeData.no_damage_from.forEach(({ name }) => immunities.add(name))
+      typeData.double_damage_to.forEach(({ name }) => strengths.add(name))
+    })
+
+    // Remove immunities from weaknesses (if immune, it can't be weak)
+    immunities.forEach((immuneType) => weaknesses.delete(immuneType))
+
+    // Remove resistances from weaknesses (if resistant, it should not be weak)
+    resistances.forEach((resistantType) => weaknesses.delete(resistantType))
+
+    return {
+      weakTo: Array.from(weaknesses),
+      strongAgainst: Array.from(strengths),
+      resistantTo: Array.from(resistances),
+      immuneTo: Array.from(immunities),
+    }
   },
   getSprite: (pokemonData: PokemonData) => {
     return pokemonData.sprites.front_default
