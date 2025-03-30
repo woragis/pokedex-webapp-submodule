@@ -2,9 +2,10 @@ import Image from 'next/image'
 
 import { FaPlus } from 'react-icons/fa6'
 
-import { pokemonStore } from '@/store/pokemon'
+import { pokemonStore, pokemonStoreDispatch } from '@/store/pokemon'
 import { PokemonData } from '@/store/types/pokemon'
 import TypeDamageRelations from './TypeDamageRelations'
+import { redirect } from 'next/navigation'
 
 interface CompareContainerProps {
   pokemon: PokemonData
@@ -12,10 +13,14 @@ interface CompareContainerProps {
 }
 
 function CompareContainer({ pokemon, empty }: CompareContainerProps) {
+  const { removeFromCompare } = pokemonStoreDispatch
   return (
     <div className='compare-container'>
       {empty && (
-        <div className='empty'>
+        <div
+          className='empty'
+          onClick={() => redirect('/search')}
+        >
           <button>
             <FaPlus />
           </button>
@@ -63,7 +68,6 @@ function CompareContainer({ pokemon, empty }: CompareContainerProps) {
                 </ul>
               </div>
               <TypeDamageRelations types={pokemon.types} />
-              {/* {getStats()} */}
             </div>
             {/* <div>
               {pokemon.stats.map((stat) => {
@@ -88,7 +92,12 @@ function CompareContainer({ pokemon, empty }: CompareContainerProps) {
           <div className='compare-action-buttons'>
             <button className='compare-btn'>add</button>
             <button className='compare-btn'>view</button>
-            <button className='compare-btn'>remove</button>
+            <button
+              className='compare-btn'
+              onClick={() => removeFromCompare(pokemon)}
+            >
+              remove
+            </button>
           </div>
         </div>
       )}

@@ -2,9 +2,10 @@
 
 import CompareContainer from '@/components/CompareContainer'
 import { pokemonStore } from '@/store/pokemon'
+import { useStore } from '@tanstack/react-store'
 
 function ComparePage() {
-  const { compare } = pokemonStore.state.pokemons
+  const { compare } = useStore(pokemonStore, (state) => state.pokemons)
   return (
     <div className='compare'>
       <CompareContainer
