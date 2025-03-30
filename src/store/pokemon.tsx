@@ -6,6 +6,7 @@ import {
   PokemonData,
   PokemonsInitialState,
   PokemonsRequest,
+  PokemonType,
   Type,
   TypeData,
   TypesRequest,
@@ -90,6 +91,44 @@ export const pokemonStoreDispatch = {
         pokemons: { ...state.pokemons, search: randomPokemons },
       }))
     }
+  },
+  mapPokemonTypes: (pokemon: PokemonData) => {
+    pokemon.types.map
+  },
+  getTypeSprite: (type: PokemonType) => {
+    return pokemonStore.state.types.data.find(
+      (typeData) => typeData.name === type.type.name
+    )?.sprites['generation-viii']['sword-shield'].name_icon
+  },
+  getTypeDoubleDamageFrom: (type: PokemonType) => {
+    return pokemonStore.state.types.data.find(
+      (typeData) => typeData.name === type.type.name
+    )?.damage_relations.double_damage_from
+  },
+  getTypeDoubleDamageTo: (type: PokemonType) => {
+    return pokemonStore.state.types.data.find(
+      (typeData) => typeData.name === type.type.name
+    )?.damage_relations.double_damage_to
+  },
+  getTypeHalfDamageFrom: (type: PokemonType) => {
+    return pokemonStore.state.types.data.find(
+      (typeData) => typeData.name === type.type.name
+    )?.damage_relations.half_damage_from
+  },
+  getTypeHalfDamageTo: (type: PokemonType) => {
+    return pokemonStore.state.types.data.find(
+      (typeData) => typeData.name === type.type.name
+    )?.damage_relations.half_damage_to
+  },
+  getTypeNoDamageFrom: (type: PokemonType) => {
+    return pokemonStore.state.types.data.find(
+      (typeData) => typeData.name === type.type.name
+    )?.damage_relations.no_damage_to
+  },
+  getTypeNoDamageTo: (type: PokemonType) => {
+    return pokemonStore.state.types.data.find(
+      (typeData) => typeData.name === type.type.name
+    )?.damage_relations.no_damage_to
   },
   getSprite: (pokemonData: PokemonData) => {
     return pokemonData.sprites.front_default
