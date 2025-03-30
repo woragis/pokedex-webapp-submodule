@@ -13,7 +13,7 @@ function PokemonTypes({ name, types }: PokemonTypesProps) {
   return (
     <>
       {types.map((type, index) => {
-        const sprite = getTypeSprite(type)
+        const sprite = getTypeSprite(type.type.name)
         if (sprite && sprite.length > 0)
           return (
             <div
