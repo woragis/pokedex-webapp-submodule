@@ -41,12 +41,26 @@
     letter-spacing: 0.1rem;
     width: 100%;
     display: grid;
+    height: 500px;
     grid-template-rows: 40% 60%;
     .compare-details {
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      position: relative;
+      .pokemon-cry {
+        position: absolute;
+        right: 0;
+        top: 0;
+        svg {
+          height: 80px;
+          width: auto;
+          background-color: rgba(0, 0, 0, 0.5);
+          border-radius: 50%;
+          padding: 10px;
+        }
+      }
       .compare-image {
         height: 10rem;
       }

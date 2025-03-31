@@ -6,6 +6,7 @@ import { pokemonStore, pokemonStoreDispatch } from '@/store/pokemon'
 import { PokemonData } from '@/store/types/pokemon'
 import TypeDamageRelations from './TypeDamageRelations'
 import { redirect } from 'next/navigation'
+import { LuAudioLines } from 'react-icons/lu'
 
 interface CompareContainerProps {
   pokemon: PokemonData
@@ -14,6 +15,12 @@ interface CompareContainerProps {
 
 function CompareContainer({ pokemon, empty }: CompareContainerProps) {
   const { removeFromCompare } = pokemonStoreDispatch
+  const pokemonCrySrc = pokemon?.cries.latest
+  const pokemonCry = new Audio(pokemonCrySrc)
+  pokemonCry.volume = 0.008
+  const playPokemonCry = () => {
+    pokemonCry.play()
+  }
   return (
     <div className='compare-container'>
       {empty && (
@@ -32,6 +39,9 @@ function CompareContainer({ pokemon, empty }: CompareContainerProps) {
           <div className='compare-info'>
             <div className='compare-details'>
               <h3>{pokemon.name}</h3>
+              <div className='pokemon-cry'>
+                <LuAudioLines onClick={playPokemonCry} />
+              </div>
               <Image
                 alt={`pokemon-${pokemon.name}-sprite`}
                 src={pokemon.sprites.front_default}
@@ -69,26 +79,7 @@ function CompareContainer({ pokemon, empty }: CompareContainerProps) {
               </div>
               <TypeDamageRelations types={pokemon.types} />
             </div>
-            {/* <div>
-              {pokemon.stats.map((stat) => {
-                return (
-                  <div key={`pokemon-${pokemon.name}-stat-${stat.stat.name}`}>
-                    <a href={stat.stat.url}>{stat.stat.name}</a>
-                    <br />
-                    number: {stat.base_stat}
-                  </div>
-                )
-              })}
-            </div> */}
           </div>
-          {/* <div className='audio'>
-            <audio
-              src={pokemon.cries.latest}
-              controls
-            >
-              Your browser doesnt support the audio element
-            </audio>
-          </div> */}
           <div className='compare-action-buttons'>
             <button className='compare-btn'>add</button>
             <button className='compare-btn'>view</button>
