@@ -1,6 +1,7 @@
 'use client'
 
 import CompareContainer from '@/components/CompareContainer'
+import StatsComparison from '@/components/StatsComparison'
 import { pokemonStore } from '@/store/pokemon'
 import { useStore } from '@tanstack/react-store'
 
@@ -15,6 +16,10 @@ function ComparePage() {
       <CompareContainer
         pokemon={compare[1]}
         empty={compare.length < 2}
+      />
+      <StatsComparison
+        pokemon1={compare[0]}
+        pokemon2={compare[1]}
       />
     </div>
   )

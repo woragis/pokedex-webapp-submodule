@@ -50,9 +50,17 @@ type Stat = {
   base_stat: number
   effort: number
   stat: {
-    name: string
+    name: stats
     url: string
   }
+}
+enum stats {
+  hp = 'hp',
+  attack = 'attack',
+  defense = 'defense',
+  special_attack = 'special-attack',
+  special_defense = 'special-defense',
+  speed = 'speed',
 }
 type Move = {
   move: {
