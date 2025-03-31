@@ -15,10 +15,10 @@ interface CompareContainerProps {
 
 function CompareContainer({ pokemon, empty }: CompareContainerProps) {
   const { removeFromCompare } = pokemonStoreDispatch
-  const pokemonCrySrc = pokemon?.cries.latest
-  const pokemonCry = new Audio(pokemonCrySrc)
-  pokemonCry.volume = 0.008
+  const pokemonCrySrc: string = pokemon?.cries.latest
   const playPokemonCry = () => {
+    const pokemonCry: HTMLAudioElement = new Audio(pokemonCrySrc || '')
+    if (pokemonCry) pokemonCry.volume = 0.008
     pokemonCry.play()
   }
   return (
